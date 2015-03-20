@@ -22,7 +22,9 @@
     "chai": "^2.1.2",
     "gulp": "^3.8.11",
     "lodash": "^3.5.0",
-    "mocha": "^2.2.1"
+    "mocha": "^2.2.1",
+    "mockery": "^1.4.0",
+    "sinon": "^1.14.1"
   },
   "peerDependencies": {
     "coffee-script": "^1.9.1"
