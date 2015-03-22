@@ -1,50 +1,12 @@
 require "./before"
 inquirer = require "inquirer"
+prompts = require "./fixtures/prompts"
 iPlus = require "../lib/inquirerPlus"
 { expect, should, Should, assert } = require 'chai'
 sinon = require("sinon")
 
-prompts = [
-  {
-    type: "list"
-    name: "list"
-    message: "a list"
-    choices: [ "foo", new inquirer.Separator(), "bar", "bum"  ]
-  }
-  {
-    type: "confirm"
-    name: "confirm"
-    message: "a confirm",
-  }
-  {
-    type: "expand"
-    name: "expand",
-    message: "an expand",
-    choices: [
-      { key: "a", name: "acab"  }
-      new inquirer.Separator()
-      { key: "b", name: "bar"   }
-      { key: "c", name: "chile" }
-    ]
-  }
-]
-
-expectedAnswers =
-  list: "bar"
-  confirm: true
-  expand: "acab"
-
-
-
 describe 'Extended prompt', ->
   describe 'Basic Functionality', ->
-    # iPlus().prompt([2,4,6,8])
-    console.log "-------------"
-    # console.dir iPlus
-    # console.log typeof iPlus
-    console.log "-------------"
-    # iPlus.prompt([2,4,6,8])
-
 
   describe 'Standard prompts', ->
     describe "when passed a bunch of standard prompts", ->
@@ -55,51 +17,21 @@ describe 'Extended prompt', ->
         # iPlus.inquirer.prompt = iPlus.inquirer.createPromptModule()
 
         # iPlus.inquirer.prompt = inquirer.createPromptModule()
+        # sinon.spy(iPlus.inquirer)
         iPlus.inquirer.prompt.dog = "poodle"
       it 'should work normally', (done) ->
-        prompts = [
-          {
-            type: "confirm"
-            name: "q1"
-            message: "message"
-          }
-          {
-            type: "confirm"
-            name: "q2"
-            message: "message"
-            default: false
-          }
-          {
-            type: "input"
-            name: "q3"
-            message: "message"
-            default: "A bad man"
-          }
-        ]
-
-        # console.log iPlus
-        # ui = this.prompt prompts, ( answers ) ->
-        ui = iPlus.prompt prompts, ( answers ) ->
-
-        # ui = iPlus.inquirer.prompt prompts, ( answers ) ->
+        ui = iPlus.prompt prompts.simple, ( answers ) ->
           console.log "Back in the test - we got answers"
           console.log answers
           expect(answers.q1).to.be.true
           expect(answers.q2).to.be.false
-          # expect(answers.q2).to.be.true
           expect(answers.q3).to.equal "abra cadabra"
           done()
 
-        ui.rl.emit("line")
-        ui.rl.emit("line")
-        ui.rl.emit("line", "abra cadabra")
+        iPlus.topUI.rl.emit("line")
+        iPlus.topUI.rl.emit("line")
+        iPlus.topUI.rl.emit("line", "abra cadabra")
 
-        # ui.rl.emit("keypress", null, { name: "down" })
-        # ui.rl.emit("line", "bla bla foo")
-
-        # inquirer.prompts
-        # inquirer.choices
-        # inquirer.answers
 
 
   describe 'Repeating prompt', ->
@@ -108,7 +40,25 @@ describe 'Extended prompt', ->
       it 'should return the expected answers', ->
     describe 'one or more prompt', ->
       it 'should terminate when expected', ->
-      it 'should return the expected answers', ->
+      it 'should return the expected answers', (done) ->
+        iPlus.prompt prompts.mixed_with_one, (answers) ->
+          expect(answers.q1).to.be.true
+          expect(answers.q2).to.eql ["i am", "actually maybe not...", "ok - i am"]
+          expect(answers.q3).to.be.false
+          expect(answers.q4).to.equal "abra cadabra"
+          done()
+
+        iPlus.topUI.rl.emit("line")
+        # repeating question
+        iPlus.topUI.rl.emit("line", "i am")
+        iPlus.topUI.rl.emit("line", "Y")
+        iPlus.topUI.rl.emit("line", "actually maybe not...")
+        iPlus.topUI.rl.emit("line", "Y")
+        iPlus.topUI.rl.emit("line", "ok - i am")
+        iPlus.topUI.rl.emit("line", "n")
+        iPlus.topUI.rl.emit("line")
+        iPlus.topUI.rl.emit("line", "abra cadabra")
+
 
   describe 'List prompt', ->
   describe 'Object prompt', ->

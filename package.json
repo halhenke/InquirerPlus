@@ -1,8 +1,8 @@
 {
   "name": "inquirer_plus",
-  "version": "0.1.0",
-  "description": "A wrapper for Inquirer.js that simplifies the creation of things like recursive prompts, and answers that take the form of lists, hashes etc",
-  "main": "index.js",
+  "version": "0.0.9",
+  "description": "A wrapper for Inquirer.js that is intended to simplify the use of recursive/dynamically repeating prompts, and also therefore the creation of answers that may take the form of lists, objects etc.",
+  "main": "lib/inquirerPlus.coffee",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
