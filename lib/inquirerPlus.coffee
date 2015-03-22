@@ -23,21 +23,16 @@ class inquirerPlus
     @finalCall = undefined
     @topUI = null
 
-  # superPrompt = (prompts, answers = []) ->
   superPrompt: (prompts, allDone) ->
     @finalCall = allDone
     @promptSwitch prompts
-    # return @inquirer.prompt
-    # return new inquirer.ui.Prompt( [], {} )
 
 
   promptSwitch: (prompts) ->
     console.log prompts.length
     debugger
-    # console.log @finalCall
     if prompts.length
       switch lo.first(prompts).type
-      # switch prompt.type
         when "oneOrMore"
           @oneOrMorePrompt prompts
         when "zeroOrMore"
@@ -54,26 +49,11 @@ class inquirerPlus
           # inquirer.prompt lo.take(prompt), @keepAnswers
 
           @topUI = @inquirer.prompt lo.take(prompts), (answers) =>
-          # @inquirer.prompt prompts, (answers) =>
-          #   lo.merge @answers, answers
-          #   @finalCall @answers
-
-          #   # console.log "answers called!: " + answers
-            console.log "This is "
-            console.dir this
-
             lo.merge @answers, answers
-            # @superPrompt(lo.rest(prompts), allDone)
-            if prompts.length is 1
-              console.log "Jump off here"
-              @finalCall @answers
-            else
-              console.log "Switching.."
-              @promptSwitch lo.rest(prompts)
+            @promptSwitch lo.rest(prompts)
     else
       console.log "all the way to the end"
       @finalCall @answers
-      # allDone @answers
 
   ###
   Pass as a callback so that any underlying
@@ -105,21 +85,9 @@ class inquirerPlus
   ###
   oneOrMorePrompt: (prompts) ->
     console.log "oneOrMorePrompt"
-    @inquirer.prompt lo.first(prompts).prompt, (answers) =>
+    @topUI = @inquirer.prompt lo.first(prompts).prompt, (answers) =>
       @keepAnswers answers, "list"
       @zeroOrMorePrompt prompts
-    # repeatPrompt =
-    #   name: "repeatPrompt"
-    #   type: "confirm"
-    #   # message: prompt.repeatMessage
-    #   message: lo.first(prompts).repeatMessage
-    # @inquirer.prompt lo.first(prompts).prompt, (answers) ->
-    # # @inquirer.prompt [repeatPrompt], (answers) ->
-    #   if answers.repeatPrompt
-    #     @inquirer.prompt prompt, (answers) ->
-    #       keepAnswers(answers)
-    #       zeroOrMorePrompt(prompt)
-    #       # repeater(prompt)
 
   ###
   A prompt to be asked zero or more times
@@ -130,21 +98,18 @@ class inquirerPlus
       name: "zeroOrMoreTimes"
       type: "confirm"
       message: lo.first(prompts).repeatMessage
-    @inquirer.prompt [repeatPrompt], (answers) =>
+    @topUI = @inquirer.prompt [repeatPrompt], (answers) =>
       if answers.zeroOrMoreTimes
-        @inquirer.prompt lo.first(prompts).prompt, (answers) =>
+        @topUI = @inquirer.prompt lo.first(prompts).prompt, (answers) =>
           @keepAnswers answers, "list"
           @zeroOrMorePrompt prompts
-          # repeater(prompt)
       else
-        # @superPrompt
         @promptSwitch lo.rest prompts
 
   repeater: (prompt) ->
-
   getAList: (prompt) ->
   getAnObject: (prompt) ->
-    console.log "zeroOrMorePrompt"
+    console.log "getAnObject"
 
 
 

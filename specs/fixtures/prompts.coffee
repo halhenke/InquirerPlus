@@ -70,19 +70,19 @@ module.exports =
         repeatMessage: "Do you need me to ask again?"
         prompt: {
           type: "input"
-          name: "q11"
+          name: "q2"
           message: "strong as oxe?"
         }
       }
       {
         type: "confirm"
-        name: "q2"
+        name: "q3"
         message: "message"
         default: false
       }
       {
         type: "input"
-        name: "q3"
+        name: "q4"
         message: "message"
         default: "A bad man"
       }
