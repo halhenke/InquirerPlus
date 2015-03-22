@@ -35,13 +35,27 @@ expectedAnswers =
   expand: "acab"
 
 
+
 describe 'Extended prompt', ->
+  describe 'Basic Functionality', ->
+    # iPlus().prompt([2,4,6,8])
+    console.log "-------------"
+    # console.dir iPlus
+    # console.log typeof iPlus
+    console.log "-------------"
+    # iPlus.prompt([2,4,6,8])
+
+
   describe 'Standard prompts', ->
-    describe 'confirm prompt', ->
-      it 'should still work', ->
     describe "when passed a bunch of standard prompts", ->
-      beforeEach ->
-        this.prompt = inquirer.createPromptModule()
+      beforeEach "mock the prompt", ->
+        # this.prompt = inquirer.createPromptModule()
+        # this.prompt = iPlus.inquirer.createPromptModule()
+
+        # iPlus.inquirer.prompt = iPlus.inquirer.createPromptModule()
+
+        # iPlus.inquirer.prompt = inquirer.createPromptModule()
+        iPlus.inquirer.prompt.dog = "poodle"
       it 'should work normally', (done) ->
         prompts = [
           {
@@ -63,16 +77,23 @@ describe 'Extended prompt', ->
           }
         ]
 
-        ui = this.prompt prompts, ( answers ) ->
+        # console.log iPlus
+        # ui = this.prompt prompts, ( answers ) ->
+        ui = iPlus.prompt prompts, ( answers ) ->
+
+        # ui = iPlus.inquirer.prompt prompts, ( answers ) ->
+          console.log "Back in the test - we got answers"
           console.log answers
           expect(answers.q1).to.be.true
           expect(answers.q2).to.be.false
+          # expect(answers.q2).to.be.true
           expect(answers.q3).to.equal "abra cadabra"
           done()
 
         ui.rl.emit("line")
         ui.rl.emit("line")
         ui.rl.emit("line", "abra cadabra")
+
         # ui.rl.emit("keypress", null, { name: "down" })
         # ui.rl.emit("line", "bla bla foo")
 
@@ -81,7 +102,7 @@ describe 'Extended prompt', ->
         # inquirer.answers
 
 
-  describe 'repeating prompt', ->
+  describe 'Repeating prompt', ->
     describe 'zero or more prompt', ->
       it 'should terminate when expected', ->
       it 'should return the expected answers', ->
@@ -89,8 +110,8 @@ describe 'Extended prompt', ->
       it 'should terminate when expected', ->
       it 'should return the expected answers', ->
 
-  describe 'list prompt', ->
-  describe 'object prompt', ->
+  describe 'List prompt', ->
+  describe 'Object prompt', ->
 
 
 
