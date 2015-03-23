@@ -1,5 +1,19 @@
 inquirer = require "inquirer"
 
+repeatObject =
+  type: "getAnObject"
+  name: "newUser"
+  repeatMessage: "Would you like to define a key/value pair for your User?"
+  keyPrompt:
+    type: "input"
+    name: "key"
+    message: "Name a user attribute"
+  valPrompt:
+    type: "input"
+    name: "val"
+    message: "What is the value of this attribute"
+    default: "bar"
+
 module.exports =
   simple:
     [
@@ -121,20 +135,7 @@ module.exports =
         name: "q1"
         message: "message"
       }
-      {
-        type: "getAnObject"
-        name: "newUser"
-        repeatMessage: "Would you like to define a key/value pair for your User?"
-        keyPrompt:
-          type: "input"
-          name: "key"
-          message: "Name a user attribute"
-        valPrompt:
-          type: "input"
-          name: "val"
-          message: "What is the value of this attribute"
-          default: "bar"
-      }
+      repeatObject
       {
         type: "confirm"
         name: "q3"
