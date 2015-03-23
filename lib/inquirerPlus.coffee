@@ -75,7 +75,6 @@ class inquirerPlus
   A prompt to be asked at least once
   ###
   oneOrMorePrompt: (prompts) ->
-    console.log "oneOrMorePrompt"
     @topUI = @inquirer.prompt lo.first(prompts).prompt, (answers) =>
       @keepAnswers answers, "list"
       @zeroOrMorePrompt prompts
@@ -84,7 +83,6 @@ class inquirerPlus
   A prompt to be asked zero or more times
   ###
   zeroOrMorePrompt: (prompts) ->
-    console.log "zeroOrMorePrompt"
     repeatPrompt =
       name: "zeroOrMoreTimes"
       type: "confirm"
@@ -98,35 +96,20 @@ class inquirerPlus
         @promptSwitch lo.rest prompts
 
   # getAList: (prompts) ->
+
   ###
-    For collecting zero or more key/val pairs for an object
+  For collecting zero or more key/val pairs for an object
   ###
   getAnObject: (prompts) ->
-    console.log "getAnObject"
     repeatPrompt =
       name: "addKeyVal"
       type: "confirm"
       message: lo.first(prompts).repeatMessage
     @topUI = @inquirer.prompt [repeatPrompt], (answers) =>
-      console.log "answers.addKeyVal: ", answers.addKeyVal
       if answers.addKeyVal
         @topUI = @inquirer.prompt [lo.first(prompts).keyPrompt, lo.first(prompts).valPrompt], (answers) =>
-          # @keepAnswers answers, "object"
-          # console.log "key/val"
-          # console.dir { 'age': 'indeterminate' }
-          # WHY THE HELL DOESNT THIS WORK????
-          # console.dir { answers.key: answers.val }
-          # console.dir {}[answers.key] = answers.val
-          # console.dir
-            # answers.key: answers.val
-          # console.dir [answers.key, answers.val]
           @answers[lo.first(prompts).name] = @answers[lo.first(prompts).name] || {}
           @answers[lo.first(prompts).name][answers.key] = answers.val
-          # if @answers[lo.first(prompts).name]
-          #   @answers[lo.first(prompts).name].merge {answers["key"]: answers.val}
-          # else
-          #   @answers[lo.first(prompts).name] = {answers.key: answers.val}
-
           @getAnObject prompts
       else
         @promptSwitch lo.rest prompts
