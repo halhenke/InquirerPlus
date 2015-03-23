@@ -5,9 +5,7 @@ iPlus = require "../lib/inquirerPlus"
 { expect, should, Should, assert } = require 'chai'
 sinon = require("sinon")
 
-describe 'Extended prompt', ->
-  describe 'Basic Functionality', ->
-
+describe "inquirerPlus Prompt", ->
   describe 'Standard prompts', ->
     describe "when passed a bunch of standard prompts", ->
       beforeEach "mock the prompt", ->
@@ -16,8 +14,6 @@ describe 'Extended prompt', ->
         # sinon.spy(iPlus.inquirer)
       it 'should work normally', (done) ->
         ui = iPlus.prompt prompts.simple, ( answers ) ->
-          console.log "Back in the test - we got answers"
-          console.log answers
           expect(answers.q1).to.be.true
           expect(answers.q2).to.be.false
           expect(answers.q3).to.equal "abra cadabra"
@@ -72,7 +68,6 @@ describe 'Extended prompt', ->
         iPlus.topUI.rl.emit("line", "abra cadabra")
 
 
-  describe 'List prompt', ->
   describe 'Object prompt', ->
     it 'should return the expected answers', (done) ->
       iPlus.prompt prompts.mixed_with_object, (answers) ->
