@@ -1,5 +1,37 @@
 inquirer = require "inquirer"
 
+repeatObject =
+  type: "getAnObject"
+  name: "newUser"
+  repeatMessage: "Would you like to define a key/value pair for your User?"
+  keyPrompt:
+    type: "input"
+    name: "key"
+    message: "Name a user attribute"
+  valPrompt:
+    type: "input"
+    name: "val"
+    message: "What is the value of this attribute"
+    default: "bar"
+
+oneOrMorePrompt =
+  type: "oneOrMore"
+  repeatMessage: "Do you need me to ask again?"
+  prompt:
+    type: "input"
+    name: "q2"
+    message: "strong as ox?"
+
+zeroOrMorePrompt =
+  type: "zeroOrMore"
+  # repeatMessage: "Do you need me to ask again?"
+  repeatMessage: "Do you have any (more) dangerous skills to add?"
+  prompt:
+    type: "input"
+    name: "q2"
+    message: "Name a dangerous skill you possess"
+
+
 module.exports =
   simple:
     [
@@ -48,15 +80,7 @@ module.exports =
     ]
   zero:
     [
-      {
-        type: "oneOrMore"
-        repeatMessage: "Do you need me to ask again?"
-        prompt: {
-          type: "input"
-          name: "q1"
-          message: "strong as oxe?"
-        }
-      }
+      zeroOrMorePrompt
     ]
   mixed_with_one:
     [
@@ -65,15 +89,7 @@ module.exports =
         name: "q1"
         message: "message"
       }
-      {
-        type: "oneOrMore"
-        repeatMessage: "Do you need me to ask again?"
-        prompt: {
-          type: "input"
-          name: "q2"
-          message: "strong as oxe?"
-        }
-      }
+      oneOrMorePrompt
       {
         type: "confirm"
         name: "q3"
@@ -87,5 +103,46 @@ module.exports =
         default: "A bad man"
       }
     ]
-
+  mixed_with_zero:
+    [
+      {
+        type: "confirm"
+        name: "q1"
+        message: "message"
+      }
+      zeroOrMorePrompt
+      {
+        type: "confirm"
+        name: "q3"
+        message: "message"
+        default: false
+      }
+      {
+        type: "input"
+        name: "q4"
+        message: "message"
+        default: "A bad man"
+      }
+    ]
+  mixed_with_object:
+    [
+      {
+        type: "confirm"
+        name: "q1"
+        message: "message"
+      }
+      repeatObject
+      {
+        type: "confirm"
+        name: "q3"
+        message: "message"
+        default: false
+      }
+      {
+        type: "input"
+        name: "q4"
+        message: "message"
+        default: "A bad man"
+      }
+    ]
 
