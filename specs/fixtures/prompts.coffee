@@ -14,6 +14,24 @@ repeatObject =
     message: "What is the value of this attribute"
     default: "bar"
 
+oneOrMorePrompt =
+  type: "oneOrMore"
+  repeatMessage: "Do you need me to ask again?"
+  prompt:
+    type: "input"
+    name: "q2"
+    message: "strong as ox?"
+
+zeroOrMorePrompt =
+  type: "zeroOrMore"
+  # repeatMessage: "Do you need me to ask again?"
+  repeatMessage: "Do you have any (more) dangerous skills to add?"
+  prompt:
+    type: "input"
+    name: "q2"
+    message: "Name a dangerous skill you possess"
+
+
 module.exports =
   simple:
     [
@@ -62,14 +80,7 @@ module.exports =
     ]
   zero:
     [
-      {
-        type: "oneOrMore"
-        repeatMessage: "Do you need me to ask again?"
-        prompt:
-          type: "input"
-          name: "q1"
-          message: "strong as oxe?"
-      }
+      zeroOrMorePrompt
     ]
   mixed_with_one:
     [
@@ -78,14 +89,7 @@ module.exports =
         name: "q1"
         message: "message"
       }
-      {
-        type: "oneOrMore"
-        repeatMessage: "Do you need me to ask again?"
-        prompt:
-          type: "input"
-          name: "q2"
-          message: "strong as ox?"
-      }
+      oneOrMorePrompt
       {
         type: "confirm"
         name: "q3"
@@ -106,15 +110,7 @@ module.exports =
         name: "q1"
         message: "message"
       }
-      {
-        type: "zeroOrMore"
-        # repeatMessage: "Do you need me to ask again?"
-        repeatMessage: "Do you have any (more) dangerous skills to add?"
-        prompt:
-          type: "input"
-          name: "q2"
-          message: "Name a dangerous skill you possess"
-      }
+      zeroOrMorePrompt
       {
         type: "confirm"
         name: "q3"
